@@ -2,6 +2,7 @@ package com.dotCompliance.hooks;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 import com.dotCompliance.utils.WebDriverCommonFunc;
 
@@ -15,7 +16,14 @@ public class Hooks {
 
     @Before
     public void setup() {
-        driver = new ChromeDriver();
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--incognito"); // ✅ Start Chrome in incognito mode
+
+        // Optional: suppress "Chrome is being controlled" banner
+        options.setExperimentalOption("excludeSwitches", new String[] { "enable-automation" });
+        options.setExperimentalOption("useAutomationExtension", false);
+
+        driver = new ChromeDriver(options);
         driverUtils = new WebDriverCommonFunc(driver);
     }
 
