@@ -1,4 +1,4 @@
-# DotCompliance BDD Automation Framework – SauceDemo Assignment
+# Spacial BDD Automation Framework – SauceDemo Assignment
 
 ## 🎯 Objective
 
@@ -15,9 +15,11 @@ The goal is to demonstrate expertise in scalable and maintainable test automatio
 - **Selenium WebDriver**
 - **TestNG**
 - **Maven**
-- **ExtentReports** *(planned for reporting)*
-- **Page Object Model (POM)** for design pattern
-- **Java Faker** *(optional for test data generation)*
+- **Rest Assured**
+- **JSON Schema Validator**
+- **Maven Surefire**
+- **WebDriverManager**
+- **Chrome browser**
 
 ---
 
@@ -25,57 +27,191 @@ The goal is to demonstrate expertise in scalable and maintainable test automatio
 
 ```
 .
-├── pom.xml
-├── src/
-│   ├── main/java/
-│   │   └── com/dotCompliance/
-│   │       ├── pages/           → Page Objects
-│   │       ├── utils/           → WebDriver + logic utilities
-│   ├── test/java/
-│   │   └── com/dotCompliance/
-│   │       ├── features/        → .feature files (Gherkin syntax)
-│   │       ├── stepDefinitions/ → StepDefs for BDD
-│   │       ├── runners/         → Cucumber TestNG runner
-│   │       ├── hooks/           → Cucumber Before/After hooks
+src
+ └─ test
+    ├─ java
+    │  ├─ com.spacial.ui
+    │  │  ├─ features          # Cucumber feature files
+    │  │  ├─ stepDefinitions   # Step definitions
+    │  │  ├─ runners           # Cucumber + TestNG runner
+    │  │  ├─ pages             # Page element definitions
+    │  │  └─ pageutils         # Page actions / flows
+    │  │
+    │  ├─ com.spacial.api
+    │  │  └─ tests             # API tests (Rest Assured)
+    │  │
+    │  └─ com.spacial.utils
+    │     └─ WebDriverCommonFunc.java
+    │
+    └─ resources
+       └─ schemas              # JSON schemas for API contract validation
+      ├── hooks/           → Cucumber Before/After hooks
 ```
 
 ---
 
 ## ✅ Implemented Test Coverage (So Far)
 
-| Area         | Scenario Example                        |
-|--------------|------------------------------------------|
-| Login        | Positive/Negative login, locked out user |
-| E2E Checkout | Full flow from login to checkout success |
-| UI Validations | Product list, filters, cart, social links |
-| State Reset  | Reset App State from menu after tests    |
+## UI Tests (SauceDemo)
 
-*See [TESTPLAN.md](./TESTPLAN.md) for full coverage.*
+Covered scenarios include:
+
+- Successful login (smoke)
+
+- Login failure with invalid credentials (negative)
+
+- Cart badge updates when adding items
+
+- Removing items from cart
+
+- Logout flow
+
+- Full E2E checkout flow (login → add product → checkout → completion)
+
+- Application state reset
+
+## API Tests (JSONPlaceholder)
+
+Covered scenarios include:
+
+- GET /posts/{id} – positive response validation
+
+- GET /posts/{invalidId} – negative / not found
+
+- Contract (schema) validation for API responses
+
+SauceDemo does not expose a public API, therefore JSONPlaceholder is used as a stable public API for demonstration purposes.
+
+_See [TESTPLAN.md](./TESTPLAN.md) for full coverage._
+
+---
+
+🏷️ Tagging Strategy (Cucumber)
+
+UI tests are organized using Cucumber tags for flexible execution:
+
+- @ui – all UI tests
+
+- @smoke – fast smoke tests (CI-friendly)
+
+- @e2e – end-to-end scenarios
+
+- @negative – negative scenarios
+
+- @debug – temporary debugging runs
 
 ---
 
 ## 🚀 How to Run Tests
 
-1. Make sure `Java 21+` and `Maven` are installed.
-2. In terminal:
-   ```bash
-   mvn clean test
-   ```
+# Prerequisites
 
-> 📢 Tests can be filtered by tag (e.g., `@login`, `@e2e`) once feature files and runners are connected.
+- Java 17+ (tested with newer versions as well)
+
+- Maven 3.8+
+
+- Google Chrome installed
+
+# In terminal:
+
+```bash
+mvn test "-Dcucumber.filter.tags=@ui"
+```
+
+```bash
+mvn test "-Dcucumber.filter.tags=@smoke"
+```
+
+```bash
+mvn test "-Dcucumber.filter.tags=@debug"
+```
+
+## Run API Tests
+
+# Run a specific API test class:
+
+```bash
+mvn test -Dtest=JsonPlaceholderApiTest
+```
+
+# Run all API tests:
+
+```bash
+mvn test -Dtest=ReqResApiTest
+```
 
 ---
 
-## 📈 Future Enhancements
+## 🧪 Test Data
 
-- [ ] Add CI/CD via GitHub Actions
-- [ ] Integrate ExtentReports or Allure
-- [ ] Support multi-browser and environment config
+# UI
 
----
+Username: standard_user
+
+Password: secret_sauce
+
+Checkout details use static test data to keep tests deterministic.
+
+# API
+
+Uses public JSONPlaceholder endpoints.
+
+No authentication required.
+
+## 🛡️ Stability & Anti-Flake Measures
+
+- Stable selectors (id, data-test) used wherever possible
+
+- Explicit waits via shared WebDriver utilities
+
+- No hard sleeps
+
+- Menu-state-aware logic for SauceDemo hamburger menu
+
+- Clean application state reset between scenarios
+
+- No global retries (failures remain meaningful)
+
+## 📌 Known Limitations
+
+- Public demo applications may change without notice
+
+- Visual/UI styling validation is out of scope
+
+- Cross-browser testing is not included (Chrome only)
+
+- Performance and load testing are not included
+
+## 🚀 CI Readiness
+
+# The project is designed for CI pipelines:
+
+# Recommended CI flow:
+
+1. Run @smoke tests on pull requests
+
+2. Run full @ui regression nightly
+
+3. Run API tests as part of PR or nightly jobs
+
+All tests are executed via Maven and are CI-friendly.
+
+## 📈 Future Improvements
+
+- Expand checkout validation scenarios
+
+- Add sorting and inventory validation
+
+- Introduce API schema suite expansion
+
+- Add reporting (Allure / ExtentReports)
+
+- Cross-browser execution
+
+- Dockerized test execution
 
 ## 👤 Author
 
 **Or Kowalsky**  
 QA Automation Engineer  
-Assignment for DotCompliance  
+Assignment for SPACIAL

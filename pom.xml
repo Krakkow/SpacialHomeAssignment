@@ -4,7 +4,7 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.dotcompliance.tests</groupId>
+  <groupId>com.spacial.tests</groupId>
   <artifactId>temp-gen</artifactId>
   <version>1.0-SNAPSHOT</version>
 
@@ -78,6 +78,23 @@
     <artifactId>extentreports-testng-adapter</artifactId>
     <version>1.2.2</version>
 </dependency>
+
+<!-- REST Assured -->
+<dependency>
+  <groupId>io.rest-assured</groupId>
+  <artifactId>rest-assured</artifactId>
+  <version>5.5.0</version>
+  <scope>test</scope>
+</dependency>
+
+<!-- Optional but great for schema/contract-like validation -->
+<dependency>
+  <groupId>io.rest-assured</groupId>
+  <artifactId>json-schema-validator</artifactId>
+  <version>5.5.0</version>
+  <scope>test</scope>
+</dependency>
+
   </dependencies>
 
   <build>
@@ -89,6 +106,7 @@
     <configuration>
       <includes>
         <include>**/*TestRunner.java</include>
+        <include>**/*Test.java</include>
       </includes>
       <testNGArtifactName>org.testng:testng</testNGArtifactName>
     </configuration>
@@ -117,10 +135,6 @@
         <plugin>
           <artifactId>maven-compiler-plugin</artifactId>
           <version>3.8.0</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-surefire-plugin</artifactId>
-          <version>2.22.1</version>
         </plugin>
         <plugin>
           <artifactId>maven-jar-plugin</artifactId>
