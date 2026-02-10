@@ -1,10 +1,18 @@
-# Spacial BDD Automation Framework – SauceDemo Assignment
+# Spacial Assignment
 
-## 🎯 Objective
+This repository contains a UI + API automation suite built as part of a QA home assignment.
 
-This project is part of a home assignment for the **QA Automation & Testing Lead** position at DotCompliance.
+The project demonstrates:
 
-The goal is to demonstrate expertise in scalable and maintainable test automation by building a robust BDD framework for [SauceDemo](https://www.saucedemo.com), covering functional and E2E test scenarios.
+- End-to-end UI automation using Selenium + Cucumber + TestNG
+
+- API automation using Rest Assured
+
+- Clean project structure (POM, utilities, separation of concerns)
+
+- Stable execution with tagging and selective test runs
+
+- CI-ready Maven execution
 
 ---
 
